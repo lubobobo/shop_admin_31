@@ -64,6 +64,8 @@ export default {
               type: 'success',
               duration: 1000
             })
+            // 把token给存储起来
+            localStorage.setItem('token', res.data.data.token)
             // 转到首页组件
             this.$router.push('/home')
           } else {
