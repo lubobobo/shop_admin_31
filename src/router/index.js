@@ -4,11 +4,14 @@ import Router from 'vue-router'
 // @表示的src的绝对路由
 import Home from '@/components/Home'
 import Login from '@/components/Login'
+// 导入Users组件
+import Users from '@/components/Users'
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [
+
     {
       path: '/',
       redirect: '/login'
@@ -19,7 +22,13 @@ const router = new Router({
     },
     {
       path: '/home',
-      component: Home
+      component: Home,
+
+      // 用于配置home路由的子路由
+      children: [{
+        path: '/users',
+        component: Users
+      }]
     }
   ]
 })
