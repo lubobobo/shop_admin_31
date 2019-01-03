@@ -1,16 +1,22 @@
 <template>
-  <div class="login">           <!-- status-icon 对错小图标-->
+  <div class="login">
+    <!-- status-icon 对错小图标-->
     <el-form ref="form" :model="form" :rules="rules" label-width="80px" status-icon>
-      <img src="@/assets/avatar.jpg" alt="">
-      <el-form-item label="用户名" prop='username'>
+      <img src="@/assets/avatar.jpg" alt>
+      <el-form-item label="用户名" prop="username">
         <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop='password'>
-        <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
+      <el-form-item label="密码" prop="password">
+        <el-input
+          v-model="form.password"
+          placeholder="请输入密码"
+          type="password"
+          @keyup.enter.native="login"
+        ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click='login'>登录</el-button>
-        <el-button @click='reset'>重置</el-button>
+        <el-button type="primary" @click="login">登录</el-button>
+        <el-button @click="reset">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -18,7 +24,7 @@
 
 <script>
 // 导入axios
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   data() {
     return {
@@ -52,9 +58,9 @@ export default {
         // 失败
         if (!valid) return false
         // 成功 发送ajax请求
-        axios({
+        this.axios({
           method: 'post',
-          url: 'http://localhost:8888/api/private/v1/login',
+          url: 'login',
           data: this.form
         }).then(res => {
           console.log(res.data)
@@ -85,7 +91,7 @@ export default {
   background-color: #2d434c;
   overflow: hidden;
 
-  .el-form{
+  .el-form {
     width: 400px;
     background-color: #fff;
     margin: 200px auto;
@@ -102,8 +108,8 @@ export default {
       border: 10px solid #fff;
 
       .el-button ~ .el-button {
-      margin-left: 80px;
-    }
+        margin-left: 80px;
+      }
     }
   }
 }

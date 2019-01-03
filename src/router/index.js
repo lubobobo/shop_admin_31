@@ -14,7 +14,7 @@ const router = new Router({
 
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/home'
     },
     {
       path: '/login',
@@ -24,7 +24,7 @@ const router = new Router({
       path: '/home',
       component: Home,
 
-      // 用于配置home路由的子路由
+      // 用于配置home路由的子路由Users
       children: [{
         path: '/users',
         component: Users
