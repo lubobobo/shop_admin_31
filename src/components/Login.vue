@@ -43,7 +43,12 @@ export default {
         ],
         password: [
           { required: true, message: '密码不能为空', trigger: 'change' },
-          { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'change' }
+          {
+            min: 6,
+            max: 12,
+            message: '长度在 6 到 12 个字符',
+            trigger: 'change'
+          }
         ]
       }
     }
@@ -53,32 +58,30 @@ export default {
     reset() {
       this.$refs.form.resetFields()
     },
-    login() {
-      this.$refs.form.validate(valid => {
-        // 失败
-        if (!valid) return false
+    async login() {
+      try {
+        // 等待表单校验成功
+        await this.$refs.form.validate()
         // 成功 发送ajax请求
-        this.axios({
+        let res = await this.axios({
           method: 'post',
           url: 'login',
           data: this.form
-        }).then(res => {
-          console.log(res.data)
-          if (res.data.meta.status === 200) {
-            this.$message({
-              message: '登陆成功',
-              type: 'success',
-              duration: 1000
-            })
-            // 把token给存储起来
-            localStorage.setItem('token', res.data.data.token)
-            // 转到首页组件
-            this.$router.push('/home')
-          } else {
-            this.$message.error(res.data.meta.msg)
-          }
         })
-      })
+        // console.log(res.data)
+        if (res.meta.status === 200) {
+          this.$message.success('登录成功')
+          // 把token给存储起来
+          localStorage.setItem('token', res.data.token)
+          // 转到首页组件
+          this.$router.push('/home')
+        } else {
+          this.$message.error(res.meta.msg)
+        }
+      } catch (e) {
+        // 失败
+        return false
+      }
     }
   }
 }

@@ -71,20 +71,19 @@
 <script>
 export default {
   methods: {
-    logout() {
-      // 弹出一个确认框
-      this.$confirm('您确定要退出本系统吗？', '温馨提示', {
-        type: 'warning'
-      }).then(() => {
-        // 表示点了确定
+    async logout() {
+      try {
+        // 弹出一个确认框
+        await this.$confirm('您确定要退出本系统吗？', '温馨提示', {
+          type: 'warning'
+        })
         // 移除token
         localStorage.removeItem('token')
         this.$router.push('/login')
         this.$message.success('退出系统成功')
-      }).catch(() => {
-        // 表示点了取消
-        this.$message.info('取消退出')
-      })
+      } catch (e) {
+        this.$message.info('取消删除')
+      }
     }
   }
 }
